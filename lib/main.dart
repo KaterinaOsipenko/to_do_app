@@ -15,6 +15,13 @@ const kScheme = ColorScheme.light(
   errorContainer: Color.fromRGBO(255, 137, 137, 1),
 );
 
+const textTheme = TextTheme(
+  titleMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+  titleSmall: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+  bodyMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+  bodySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -25,6 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: kScheme,
         useMaterial3: true,
+        textTheme: textTheme,
       ),
       home: const HomeScreen(),
     );
