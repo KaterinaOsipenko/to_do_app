@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:to_do_app/models/status.dart';
@@ -14,7 +13,7 @@ class ToDo {
   final String file;
   final DateTime finishDate;
   final Urgent urgent;
-  final DateTime synchTime;
+  final DateTime syncTime;
 
   ToDo({
     required this.taskId,
@@ -25,7 +24,7 @@ class ToDo {
     required this.file,
     required this.finishDate,
     required this.urgent,
-    required this.synchTime,
+    required this.syncTime,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,7 +37,7 @@ class ToDo {
       'file': file,
       'finishDate': finishDate.millisecondsSinceEpoch,
       'urgent': urgent.number,
-      'synchTime': synchTime.millisecondsSinceEpoch,
+      'synchTime': syncTime.millisecondsSinceEpoch,
     };
   }
 
@@ -50,9 +49,9 @@ class ToDo {
       type: map['type'] as int == 1 ? Type.work : Type.personal,
       description: map['description'] as String,
       file: map['file'] as String,
-      finishDate: DateTime.fromMillisecondsSinceEpoch(map['finishDate'] as int),
+      finishDate: DateTime.parse(map['finishDate'] as String),
       urgent: map['urgent'] as int == 1 ? Urgent.yes : Urgent.no,
-      synchTime: DateTime.fromMillisecondsSinceEpoch(map['synchTime'] as int),
+      syncTime: DateTime.parse(map['syncTime'] as String),
     );
   }
 
