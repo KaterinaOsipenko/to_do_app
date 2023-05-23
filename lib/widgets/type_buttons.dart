@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TypeButtons extends StatefulWidget {
-  const TypeButtons({super.key});
+  final Function loadList;
+  const TypeButtons({super.key, required this.loadList});
 
   @override
   State<TypeButtons> createState() => _TypeButtonsState();
@@ -23,6 +24,7 @@ class _TypeButtonsState extends State<TypeButtons> {
         for (int i = 0; i < _selectedTypeToDoItem.length; i++) {
           _selectedTypeToDoItem[i] = i == index;
         }
+        widget.loadList(index);
       });
     }
 
