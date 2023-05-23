@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/models/to_do.dart';
 import 'package:to_do_app/services/api.dart';
 import 'package:to_do_app/widgets/background.dart';
+import 'package:to_do_app/widgets/type_buttons.dart';
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -29,18 +30,33 @@ class _ToDoListState extends State<ToDoList> {
 
   @override
   Widget build(BuildContext context) {
+    final _mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
-      body: Stack(
-        children: [
-          const Background(),
-          Container(
-            child: _isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(),
-          )
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            const Background(),
+            Container(
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Container(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TypeButtons(),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+            )
+          ],
+        ),
       ),
     );
   }

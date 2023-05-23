@@ -12,7 +12,10 @@ class Background extends StatelessWidget {
       height: _mediaQuery.size.height,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color.fromRGBO(169, 169, 169, 1), Color(0xFF383838)],
+          colors: [
+            Color.fromRGBO(169, 169, 169, 1),
+            Color.fromRGBO(56, 56, 56, 1)
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
