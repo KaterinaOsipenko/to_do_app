@@ -5,6 +5,17 @@ import 'package:to_do_app/models/to_do.dart';
 import 'package:to_do_app/util/api_util.dart';
 
 class ApiSerivce {
+  static Future<http.Response> updateStatus(String id, int status) {
+    return http.put(
+      Uri.parse("${ApiUtil.baseUrl}${ApiUtil.tasksEndpoint}/$id"),
+      body: jsonEncode(
+        <String, int>{
+          'status': status,
+        },
+      ),
+    );
+  }
+
   static Future<List<ToDo>> getToDoList() async {
     final response =
         await http.get(Uri.parse(ApiUtil.baseUrl + ApiUtil.tasksEndpoint));

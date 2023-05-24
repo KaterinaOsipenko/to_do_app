@@ -8,6 +8,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+
+    void nextPage() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => ToDoList(),
+        ),
+      );
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -20,13 +29,7 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.elliptical(50, 50))),
               margin: EdgeInsets.only(top: mediaQuery.size.height * 0.2),
               child: FilledButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => ToDoList(),
-                    ),
-                  );
-                },
+                onPressed: nextPage,
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
                       Theme.of(context).colorScheme.tertiary),

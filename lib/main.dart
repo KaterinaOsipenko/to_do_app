@@ -16,10 +16,31 @@ const kScheme = ColorScheme.light(
 );
 
 const textTheme = TextTheme(
-  titleMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
-  titleSmall: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-  bodyMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-  bodySmall: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+  titleMedium: TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
+    color: Color.fromRGBO(56, 56, 56, 1),
+  ),
+  titleSmall: TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+    color: Color.fromRGBO(56, 56, 56, 1),
+  ),
+  bodyMedium: TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 18,
+    color: Color.fromRGBO(56, 56, 56, 1),
+  ),
+  bodySmall: TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    color: Color.fromRGBO(56, 56, 56, 1),
+  ),
+  labelSmall: TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 11,
+    color: Color.fromRGBO(56, 56, 56, 1),
+  ),
 );
 
 class MyApp extends StatelessWidget {
