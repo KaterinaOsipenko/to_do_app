@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
@@ -6,10 +5,7 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData _mediaQuery = MediaQuery.of(context);
     return Container(
-      width: _mediaQuery.size.width,
-      height: _mediaQuery.size.height,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [

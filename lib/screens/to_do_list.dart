@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:to_do_app/models/to_do.dart';
-import 'package:to_do_app/models/status.dart';
 import 'package:to_do_app/models/type.dart';
 import 'package:to_do_app/services/api.dart';
 import 'package:to_do_app/widgets/add_to_to_button.dart';
@@ -20,7 +17,7 @@ class ToDoList extends StatefulWidget {
 
 class _ToDoListState extends State<ToDoList> {
   late Future<List<ToDo>> _toDoList;
-  var _isLoading = true;
+
   int _type = 0;
 
   @override
@@ -46,7 +43,6 @@ class _ToDoListState extends State<ToDoList> {
     }
     setState(() {
       _toDoList = list;
-      _isLoading = false;
     });
   }
 
@@ -58,58 +54,60 @@ class _ToDoListState extends State<ToDoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            const Background(),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.03),
-                      child: TypeButtons(
-                        loadList: _loadToDoList,
-                      ),
+      appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(169, 169, 169, 1),
+        toolbarHeight: 0,
+      ),
+      body: Stack(
+        children: [
+          const Background(),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.03),
+                    child: TypeButtons(
+                      loadList: _loadToDoList,
                     ),
-                  ],
-                ),
-                FutureBuilder(
-                  builder: (context, snaphots) {
-                    if (snaphots.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    if (snaphots.hasError) {
-                      return ErrorWidget(snaphots.error!);
-                    }
-                    if (snaphots.data!.isEmpty) {
-                      return const Center(
-                        child: Text("Немає подій"),
-                      );
-                    }
-                    return Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ToDoItem(
-                            toDo: snaphots.data![index],
-                          );
-                        },
-                        itemCount: snaphots.data!.length,
-                      ),
+                  ),
+                ],
+              ),
+              FutureBuilder(
+                builder: (context, snaphots) {
+                  if (snaphots.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snaphots.hasError) {
+                    return ErrorWidget(snaphots.error!);
+                  }
+                  if (snaphots.data!.isEmpty) {
+                    return const Center(
+                      child: Text("Немає подій"),
                     );
-                  },
-                  future: _toDoList,
-                ),
-              ],
-            ),
-            AddToDoItemButton(
-              addToDo: addToDo,
-            ),
-          ],
-        ),
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return ToDoItem(
+                          toDo: snaphots.data![index],
+                        );
+                      },
+                      itemCount: snaphots.data!.length,
+                    ),
+                  );
+                },
+                future: _toDoList,
+              ),
+            ],
+          ),
+          AddToDoItemButton(
+            addToDo: addToDo,
+          ),
+        ],
       ),
     );
   }
