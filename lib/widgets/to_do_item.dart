@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:to_do_app/models/to_do.dart';
+import 'package:to_do_app/models/status.dart';
 
 import 'package:intl/intl.dart';
 
+import '../services/api.dart';
+
 class ToDoItem extends StatefulWidget {
   final ToDo toDo;
-  final Function onChangeStatus;
-  const ToDoItem({super.key, required this.toDo, required this.onChangeStatus});
+  const ToDoItem({
+    super.key,
+    required this.toDo,
+  });
 
   @override
   State<ToDoItem> createState() => _ToDoItemState();
@@ -17,6 +22,15 @@ class _ToDoItemState extends State<ToDoItem> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+
+    void onChangeStatus(bool? value) async {
+      var response = await ApiSerivce.updateStatus(
+          widget.toDo.taskId, widget.toDo.status.number);
+
+      setState(() {
+        widget.toDo.status = (value == true) ? Status.done : Status.active;
+      });
+    }
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -53,8 +67,7 @@ class _ToDoItemState extends State<ToDoItem> {
             value: widget.toDo.status.number == 1 ? false : true,
             activeColor: Theme.of(context).colorScheme.surface,
             checkColor: Theme.of(context).colorScheme.onSecondary,
-            onChanged: (value) =>
-                widget.onChangeStatus(value, widget.toDo.taskId),
+            onChanged: onChangeStatus,
           ),
         ),
       ),

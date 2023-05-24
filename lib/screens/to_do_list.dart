@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:to_do_app/models/to_do.dart';
 import 'package:to_do_app/models/status.dart';
+import 'package:to_do_app/models/type.dart';
 import 'package:to_do_app/services/api.dart';
 import 'package:to_do_app/widgets/add_to_to_button.dart';
 import 'package:to_do_app/widgets/background.dart';
@@ -18,7 +21,7 @@ class ToDoList extends StatefulWidget {
 class _ToDoListState extends State<ToDoList> {
   late Future<List<ToDo>> _toDoList;
   var _isLoading = true;
-  final _type = 0;
+  int _type = 0;
 
   @override
   void initState() {
@@ -27,29 +30,23 @@ class _ToDoListState extends State<ToDoList> {
   }
 
   void _loadToDoList(int type) async {
-    var list;
-    if (type == 0) {
-      list = ApiSerivce.getToDoList();
-      print('all');
-    } else if (type == 1) {
-      list = ApiSerivce.getToDoList();
+    _type = type;
+    var list = ApiSerivce.getToDoList();
+    if (type == 1) {
+      list = list.then((value) {
+        return value.where((element) => element.type == Type.work).toList();
+      });
       print('get work');
-    } else {
-      list = ApiSerivce.getToDoList();
+    } else if (type == 2) {
+      list = list.then((value) {
+        return value.where((element) => element.type == Type.personal).toList();
+      });
+
       print('get nor work');
     }
     setState(() {
       _toDoList = list;
       _isLoading = false;
-    });
-  }
-
-  void onChangeStatus(bool? value, String id) {
-    print('change ststat');
-    ApiSerivce.updateStatus(
-        id, value == true ? Status.done.number : Status.active.number);
-    setState(() {
-      _loadToDoList(_type);
     });
   }
 
@@ -98,7 +95,6 @@ class _ToDoListState extends State<ToDoList> {
                         itemBuilder: (context, index) {
                           return ToDoItem(
                             toDo: snaphots.data![index],
-                            onChangeStatus: onChangeStatus,
                           );
                         },
                         itemCount: snaphots.data!.length,
@@ -107,10 +103,10 @@ class _ToDoListState extends State<ToDoList> {
                   },
                   future: _toDoList,
                 ),
-                AddToDoItemButton(
-                  addToDo: addToDo,
-                ),
               ],
+            ),
+            AddToDoItemButton(
+              addToDo: addToDo,
             ),
           ],
         ),
