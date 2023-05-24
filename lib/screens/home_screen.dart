@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     void nextPage() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => ToDoList(),
+          builder: (ctx) => const ToDoList(),
         ),
       );
     }

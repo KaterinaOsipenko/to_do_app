@@ -27,9 +27,13 @@ class _ToDoItemState extends State<ToDoItem> {
       var response = await ApiSerivce.updateStatus(
           widget.toDo.taskId, widget.toDo.status.number);
 
-      setState(() {
-        widget.toDo.status = (value == true) ? Status.done : Status.active;
-      });
+      if (response.statusCode != 200) {
+        ErrorWidget(response.statusCode);
+      } else {
+        setState(() {
+          widget.toDo.status = (value == true) ? Status.active : Status.done;
+        });
+      }
     }
 
     return Container(
@@ -64,7 +68,7 @@ class _ToDoItemState extends State<ToDoItem> {
               border:
                   Border.all(color: Theme.of(context).colorScheme.onSecondary)),
           child: Checkbox(
-            value: widget.toDo.status.number == 1 ? false : true,
+            value: widget.toDo.status == Status.done ? false : true,
             activeColor: Theme.of(context).colorScheme.surface,
             checkColor: Theme.of(context).colorScheme.onSecondary,
             onChanged: onChangeStatus,
