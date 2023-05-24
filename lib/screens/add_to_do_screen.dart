@@ -11,17 +11,37 @@ class AddToDo extends StatefulWidget {
 class _AddToDoState extends State<AddToDo> {
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(169, 169, 169, 1),
-        title: Text("ff"),
-      ),
-      body: SafeArea(
-          child: Stack(
+      body: Stack(
         children: [
           const Background(),
+          SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: mediaQuery.size.height * 0.1,
+                      width: mediaQuery.size.width * 0.1,
+                      alignment: Alignment.topLeft,
+                      child: BackButton(
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
+                    ),
+
+                    // Container(
+                    //   color: Colors.amber,
+                    //   height: 450,
+                    //   width: 200,
+                    // )
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
-      )),
+      ),
     );
   }
 }

@@ -54,55 +54,54 @@ class _ToDoListState extends State<ToDoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(169, 169, 169, 1),
-        toolbarHeight: 0,
-      ),
       body: Stack(
         children: [
           const Background(),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.03),
-                    child: TypeButtons(
-                      loadList: _loadToDoList,
+          SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      child: TypeButtons(
+                        loadList: _loadToDoList,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              FutureBuilder(
-                builder: (context, snaphots) {
-                  if (snaphots.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snaphots.hasError) {
-                    return ErrorWidget(snaphots.error!);
-                  }
-                  if (snaphots.data!.isEmpty) {
-                    return const Center(
-                      child: Text("Немає подій"),
+                  ],
+                ),
+                FutureBuilder(
+                  builder: (context, snaphots) {
+                    if (snaphots.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snaphots.hasError) {
+                      return ErrorWidget(snaphots.error!);
+                    }
+                    if (snaphots.data!.isEmpty) {
+                      return const Center(
+                        child: Text("Немає подій"),
+                      );
+                    }
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ToDoItem(
+                            toDo: snaphots.data![index],
+                          );
+                        },
+                        itemCount: snaphots.data!.length,
+                      ),
                     );
-                  }
-                  return Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return ToDoItem(
-                          toDo: snaphots.data![index],
-                        );
-                      },
-                      itemCount: snaphots.data!.length,
-                    ),
-                  );
-                },
-                future: _toDoList,
-              ),
-            ],
+                  },
+                  future: _toDoList,
+                ),
+              ],
+            ),
           ),
           AddToDoItemButton(
             addToDo: addToDo,
