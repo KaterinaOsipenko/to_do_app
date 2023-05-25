@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class InputTemplate extends StatelessWidget {
+class ContainerTemplate extends StatelessWidget {
   final double width;
   final Widget child;
 
-  const InputTemplate({super.key, required this.width, required this.child});
+  const ContainerTemplate(
+      {super.key, required this.width, required this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -1,16 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:to_do_app/models/status.dart';
 import 'package:to_do_app/models/to_do.dart';
 import 'package:to_do_app/screens/to_do_list.dart';
 import 'package:to_do_app/services/api.dart';
 import 'package:to_do_app/widgets/background.dart';
-import 'package:to_do_app/widgets/input_template.dart';
+import 'package:to_do_app/widgets/container_template.dart';
 
-import 'package:to_do_app/widgets/type_button.dart';
-import 'package:to_do_app/widgets/urgent_button.dart';
+import 'package:to_do_app/widgets/buttons/type_button.dart';
+import 'package:to_do_app/widgets/buttons/urgent_button.dart';
+import 'package:to_do_app/widgets/date_button.dart';
 
 class CreateToDo extends StatefulWidget {
   const CreateToDo({super.key});
@@ -21,25 +21,21 @@ class CreateToDo extends StatefulWidget {
 
 class _CreateToDoState extends State<CreateToDo> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   late String name;
-  late String description;
-  DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
+  String description = '';
 
   String? textValidator(String? value) {
     if (value == null || value.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Введіть всі поля!')),
+        const SnackBar(content: Text('Введіть назву!')),
       );
     }
     return null;
   }
 
   void submitData() async {
-    if (_formKey.currentState!.validate() &&
-        _formKey2.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _formKey2.currentState!.save();
       ToDo toDo = ToDo(
         taskId: Random(45).toString(),
         status: Status.active,
@@ -47,17 +43,13 @@ class _CreateToDoState extends State<CreateToDo> {
         type: TypeButton().type,
         description: description,
         file: 'file',
-        finishDate: selectedDate,
+        finishDate: DateButton().selectedDate,
         urgent: UrgentButton().urgent,
         syncTime: DateTime.now(),
       );
       await ApiSerivce.createToDo(toDo);
-      print('dfdfvdv');
+
       checkUpList();
-    } else {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Введіть всі поля!')),
-      // );
     }
   }
 
@@ -66,23 +58,6 @@ class _CreateToDoState extends State<CreateToDo> {
         .push(MaterialPageRoute(builder: (context) => ToDoList()));
   }
 
-  void showFinishDatePicker() => showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(
-          DateTime.now().year + 1,
-        ),
-      ).then(
-        (pickedDate) {
-          if (pickedDate == null) {
-            return;
-          }
-          setState(() {
-            selectedDate = pickedDate;
-          });
-        },
-      );
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -136,7 +111,6 @@ class _CreateToDoState extends State<CreateToDo> {
                           child: TypeButton(),
                         ),
                         Form(
-                          key: _formKey2,
                           child: Container(
                             color: Theme.of(context).colorScheme.surface,
                             padding: EdgeInsets.symmetric(
@@ -161,43 +135,24 @@ class _CreateToDoState extends State<CreateToDo> {
                             ),
                           ),
                         ),
-                        InputTemplate(
+                        ContainerTemplate(
                           width: mediaQuery.size.width,
                           child: Text('Прикріпити файл',
                               style: Theme.of(context).textTheme.titleSmall),
                         ),
-                        InputTemplate(
-                          width: mediaQuery.size.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Дата завершення: ${DateFormat.yMd().format(selectedDate)}',
-                                  ),
-                                ],
-                              ),
-                              FilledButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary)),
-                                onPressed: showFinishDatePicker,
-                                child: const Text('Оберіть дату'),
-                              ),
-                            ],
-                          ),
-                        ),
+                        DateButton(),
                         UrgentButton(),
                         FilledButton(
                           onPressed: submitData,
                           style: ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll(
                                 Theme.of(context).colorScheme.tertiary),
+                            padding: MaterialStatePropertyAll(
+                              EdgeInsets.symmetric(
+                                horizontal: mediaQuery.size.width * 0.1,
+                                vertical: mediaQuery.size.height * 0.02,
+                              ),
+                            ),
                           ),
                           child: Text(
                             'Створити',
