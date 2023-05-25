@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/models/to_do.dart';
 import 'package:to_do_app/models/type.dart';
 import 'package:to_do_app/services/api.dart';
-import 'package:to_do_app/widgets/add_to_to_button.dart';
+import 'package:to_do_app/widgets/buttons/add_to_to_button.dart';
 import 'package:to_do_app/widgets/background.dart';
 import 'package:to_do_app/widgets/to_do_item.dart';
-import 'package:to_do_app/widgets/type_buttons.dart';
+import 'package:to_do_app/widgets/buttons/type_buttons.dart';
 import 'package:to_do_app/screens/create_to_do.dart';
 
 class ToDoList extends StatefulWidget {
