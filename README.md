@@ -1,16 +1,29 @@
 # to_do_app
 
-A new Flutter project.
+Softwars тестове завдання
 
-## Getting Started
+# Завдання
 
-This project is a starting point for a Flutter application.
+Розробити мобільний застосунок відповідно до дизайну https://www.figma.com/file/oOZTdUuOGpmQZdp8ndhHOm/ (доступ до дизайну за запитом з ім’ям та прізвищем із резюме) та вимог, описаних нижче, використовуючи Flutter (min version 3.0.0).
+Створити приватний проект на GitHub та надати доступ до репозиторію для @soft-wars
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Пріоритетні Функції застосунку:
+Завантажувати список завдань із сервера та відображати їх на екран,
+Створювати та редагувати завдання і відвантажувати їх на сервер,
+Виконувати завдання (відмічати їх виконаними) та зберігати статус завдання на сервері
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Додаткові функції застосунку (їх реалізація буде великим плюсом):
+Зберігати завдання в локальну базу даних, для показу їх без підключення до сервера,
+Прикріпити зображення до завдання,
+Фільтрувати завдання відповідно до типів (особисті, робочі)
+Видаляти завдання,
+Повноцінна робота із завданнями без підключення до сервера та повна синхронізація при відновленні зв'язку.
+
+# Виконані завдання
+Завантажувати список завдань із сервера та відображати їх на екран,
+Створювати завдання і відвантажувати їх на сервер,
+Виконувати завдання (відмічати їх виконаними) та зберігати статус завдання на сервері
+Фільтрувати завдання відповідно до типів (особисті, робочі)
+
+
