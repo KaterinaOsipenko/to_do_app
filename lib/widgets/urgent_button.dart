@@ -1,8 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:to_do_app/models/urgent.dart';
 
 class UrgentButton extends StatefulWidget {
-  const UrgentButton({super.key});
+  Urgent _urgent;
+
+  UrgentButton([
+    Key? key,
+    this._urgent = Urgent.no,
+  ]) : super(key: key);
+
+  Urgent get urgent => _urgent;
+
+  set urgent(Urgent value) {
+    _urgent = value;
+  }
 
   @override
   State<UrgentButton> createState() => _UrgentButtonState();
@@ -10,7 +23,6 @@ class UrgentButton extends StatefulWidget {
 
 class _UrgentButtonState extends State<UrgentButton> {
   Urgent urgent = Urgent.no;
-
   void onChangeUrgent(bool? value) {
     setState(() {
       urgent = value == true ? Urgent.yes : Urgent.no;

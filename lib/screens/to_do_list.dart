@@ -6,7 +6,7 @@ import 'package:to_do_app/widgets/add_to_to_button.dart';
 import 'package:to_do_app/widgets/background.dart';
 import 'package:to_do_app/widgets/to_do_item.dart';
 import 'package:to_do_app/widgets/type_buttons.dart';
-import 'package:to_do_app/screens/add_to_do_screen.dart';
+import 'package:to_do_app/screens/create_to_do.dart';
 
 class ToDoList extends StatefulWidget {
   const ToDoList({super.key});
@@ -48,7 +48,7 @@ class _ToDoListState extends State<ToDoList> {
 
   void addToDo() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => AddToDo()));
+        .push(MaterialPageRoute(builder: (context) => CreateToDo()));
   }
 
   @override
