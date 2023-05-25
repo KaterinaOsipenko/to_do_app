@@ -5,7 +5,7 @@ import 'package:to_do_app/models/status.dart';
 
 import 'package:intl/intl.dart';
 
-import '../services/api.dart';
+import 'package:to_do_app/services/api.dart';
 
 class ToDoItem extends StatefulWidget {
   final ToDo toDo;
@@ -68,7 +68,7 @@ class _ToDoItemState extends State<ToDoItem> {
               border:
                   Border.all(color: Theme.of(context).colorScheme.onSecondary)),
           child: Checkbox(
-            value: widget.toDo.status == Status.done ? false : true,
+            value: widget.toDo.status.number == 1 ? true : false,
             activeColor: Theme.of(context).colorScheme.surface,
             checkColor: Theme.of(context).colorScheme.onSecondary,
             onChanged: onChangeStatus,

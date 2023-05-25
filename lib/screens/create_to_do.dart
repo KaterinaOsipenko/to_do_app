@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app/models/status.dart';
 import 'package:to_do_app/models/to_do.dart';
+import 'package:to_do_app/screens/to_do_list.dart';
+import 'package:to_do_app/services/api.dart';
 import 'package:to_do_app/widgets/background.dart';
 import 'package:to_do_app/widgets/input_template.dart';
 
@@ -19,21 +21,27 @@ class CreateToDo extends StatefulWidget {
 
 class _CreateToDoState extends State<CreateToDo> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
   late String name;
   late String description;
   DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
 
   String? textValidator(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Будь ласка, введіть текст';
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Введіть всі поля!')),
+      );
     }
     return null;
   }
 
   void submitData() async {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() &&
+        _formKey2.currentState!.validate()) {
+      _formKey.currentState!.save();
+      _formKey2.currentState!.save();
       ToDo toDo = ToDo(
-        taskId: Random(15000000).toString(),
+        taskId: Random(45).toString(),
         status: Status.active,
         name: name,
         type: TypeButton().type,
@@ -43,11 +51,19 @@ class _CreateToDoState extends State<CreateToDo> {
         urgent: UrgentButton().urgent,
         syncTime: DateTime.now(),
       );
+      await ApiSerivce.createToDo(toDo);
+      print('dfdfvdv');
+      checkUpList();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Введіть всі поля!')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Введіть всі поля!')),
+      // );
     }
+  }
+
+  void checkUpList() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ToDoList()));
   }
 
   void showFinishDatePicker() => showDatePicker(
@@ -119,27 +135,30 @@ class _CreateToDoState extends State<CreateToDo> {
                           width: mediaQuery.size.width,
                           child: TypeButton(),
                         ),
-                        Container(
-                          color: Theme.of(context).colorScheme.surface,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: mediaQuery.size.width * 0.07,
-                          ),
-                          margin: EdgeInsets.symmetric(
-                              vertical: mediaQuery.size.height * 0.01),
-                          height: mediaQuery.size.height * 0.1,
-                          child: TextFormField(
-                            cursorColor:
-                                Theme.of(context).colorScheme.onSecondary,
-                            validator: textValidator,
-                            maxLines: 3,
-                            style: Theme.of(context).textTheme.titleSmall,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Додати опис....',
+                        Form(
+                          key: _formKey2,
+                          child: Container(
+                            color: Theme.of(context).colorScheme.surface,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.size.width * 0.07,
                             ),
-                            onSaved: (value) {
-                              description = value!;
-                            },
+                            margin: EdgeInsets.symmetric(
+                                vertical: mediaQuery.size.height * 0.01),
+                            height: mediaQuery.size.height * 0.1,
+                            child: TextFormField(
+                              cursorColor:
+                                  Theme.of(context).colorScheme.onSecondary,
+                              validator: textValidator,
+                              maxLines: 3,
+                              style: Theme.of(context).textTheme.titleSmall,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Додати опис....',
+                              ),
+                              onSaved: (value) {
+                                description = value!;
+                              },
+                            ),
                           ),
                         ),
                         InputTemplate(

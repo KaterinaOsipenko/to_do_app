@@ -91,15 +91,14 @@ class ToDo {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'taskId': taskId,
-      'status': status.number,
-      'name': name,
-      'type': type.number,
-      'description': description,
-      'file': file,
-      'finishDate': finishDate.millisecondsSinceEpoch,
-      'urgent': urgent.number,
-      'synchTime': syncTime.millisecondsSinceEpoch,
+      "taskId": taskId,
+      "status": status.number,
+      "name": name,
+      "type": type.number,
+      "description": description,
+      "finishDate": finishDate.toIso8601String(),
+      "urgent": urgent.number,
+      "file": file,
     };
   }
 
