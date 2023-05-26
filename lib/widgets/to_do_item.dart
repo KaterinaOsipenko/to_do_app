@@ -68,7 +68,7 @@ class _ToDoItemState extends State<ToDoItem> {
               border:
                   Border.all(color: Theme.of(context).colorScheme.onSecondary)),
           child: Checkbox(
-            value: widget.toDo.status.number == 1 ? true : false,
+            value: widget.toDo.status.number == 1 ? false : true,
             activeColor: Theme.of(context).colorScheme.surface,
             checkColor: Theme.of(context).colorScheme.onSecondary,
             onChanged: onChangeStatus,
